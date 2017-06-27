@@ -13,14 +13,6 @@ class Weather extends Component {
     };
   }
 
-  // http://api.openweathermap.org/data/2.5/weather?q=London&units=metric&APPID=58a2cd1a0a047829682e7668d5179c95
-
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   if (this.state.city !== nextState.city)
-  //     return false;
-  //   return true;
-  // }
-
   handleCityChange = (update) => {
     this.setState(update);
   }
