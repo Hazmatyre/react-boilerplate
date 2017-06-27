@@ -42,6 +42,7 @@ class Weather extends Component {
       else if (status === 404)
         throw "City not found!"
     } catch (err) {
+      console.log(err);
       alert('ERROR: ' + err);
     }
     this.setState({
