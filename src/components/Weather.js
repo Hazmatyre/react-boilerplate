@@ -3,6 +3,8 @@ import WeatherForm from './WeatherForm.js';
 import WeatherOutput from './WeatherOutput.js';
 import {getWeather} from '../api/openWeatherMap.js'
 
+import RefreshIndicator from 'material-ui/RefreshIndicator';
+
 class Weather extends Component {
   constructor(props) {
     super(props);
@@ -48,9 +50,20 @@ class Weather extends Component {
       cityOutput,
       isLoading } = this.state;
 
+    const Loading = () => (
+      <div>
+        <RefreshIndicator
+          size={40}
+          left={10}
+          top={10}
+          status='loading'
+          style={{display: 'inline-block', position: 'relative'}}/>
+      </div>
+    )
+
     function renderMessage() {
       if (isLoading) {
-        return <h3>Loading...</h3>;
+        return <Loading/>;
       } else if (cityOutput && temperature) {
         return(
           <WeatherOutput
