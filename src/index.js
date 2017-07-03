@@ -5,9 +5,18 @@ import registerServiceWorker from './registerServiceWorker';
 import {BrowserRouter} from 'react-router-dom'
 import './index.css';
 
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+
+injectTapEventPlugin();
+
 ReactDOM.render(
   <BrowserRouter>
-    <App/>
+    <MuiThemeProvider muiTheme={getMuiTheme()}>
+        <App/>
+    </MuiThemeProvider>
   </BrowserRouter>,
   document.getElementById('root')
 );
