@@ -8,16 +8,19 @@ import About from './components/About.js';
 import Examples from './components/Examples.js'
 
 import {Route} from 'react-router-dom';
+import Container from './components/Container.js';
 
 const App = ({}) => (
   <div>
     <Nav/>
-    <Route exact path='/' component={Weather} />
-    <Route path="/about" component={About} />
-    <Route path='/examples' component={Examples} />
+    <Container>
+      <Route exact path='/' component={Weather} />
+      <Route path="/about" component={About} />
+      <Route path='/examples' component={Examples} />
+    </Container>
   </div>
 );
-// 
+//
 // class App extends Component {
 //   render() {
 //     return (

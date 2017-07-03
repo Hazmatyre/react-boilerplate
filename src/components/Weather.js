@@ -55,7 +55,7 @@ class Weather extends Component {
         <RefreshIndicator
           size={40}
           left={10}
-          top={10}
+          top={20}
           status='loading'
           style={{display: 'inline-block', position: 'relative'}}/>
       </div>
@@ -74,7 +74,7 @@ class Weather extends Component {
     }
 
     return (
-      <div>
+      <div style={{textAlign: 'center'}}>
         <h1>Get Weather</h1>
         <WeatherForm
           onCityChange={this.handleCityChange}
