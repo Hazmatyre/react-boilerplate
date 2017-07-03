@@ -10,26 +10,21 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 import NavSearch from './NavSearch.js';
 
 class Nav extends Component {
+  constructor(props) {
+    super(props);
+    this.props.history.listen((location, action) => {
+      let currentTab = location.pathname.split('/').pop();
+      this.setState({ activeTab: currentTab || 'default'});
+    });
+  }
 
   componentWillMount() {
-    let urlPath = window.location.pathname;
-    let currentTab = urlPath.split('/').pop();
-    // More validations here if needed
-    this.setState({ activeTab: currentTab || 'default' });
-
-    console.log(urlPath);
-    console.log(currentTab);
-    console.log(this.state.activeTab);
+    let currentTab = window.location.pathname.split('/').pop();
+    this.setState({ activeTab: currentTab || 'default'});
   }
 
   handleActive = (tab) => {
     this.props.history.push(tab.props['data-route']);
-    this.setState({ activeTab: tab.props.value });
-  }
-
-  goHome = () => {
-    this.props.history.push('/');
-    this.setState({ activeTab: 'default'})
   }
 
   render() {
@@ -41,7 +36,7 @@ class Nav extends Component {
             maxWidth: 450,
             width: '70%'}}
             className="Test">
-          <Link to='/' style={{textDecoration: 'none', color: 'black'}} onClick={this.goHome}>
+          <Link to='/' style={{textDecoration: 'none', color: 'black'}}>
             <h1 style={{marginRight: 30, marginLeft: 15}}>Weather</h1>
           </Link>
           <Tabs
