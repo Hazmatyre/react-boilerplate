@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class WeatherForm extends Component {
 
@@ -22,14 +23,34 @@ class WeatherForm extends Component {
           <input
             type="text"
             ref="city"
+            style={styles.field}
             onChange={this.onCityChange}
             placeholder="Enter city name"
           />
-          <button>Get Weather</button>
+          <br/>
+          <RaisedButton
+            type="submit"
+            label="Get Weather"
+            secondary={true}
+            style={styles.button}/>
         </form>
       </div>
     );
   }
 }
+
+var styles = {
+  button: {
+    margin: 12,
+    height: 30,
+    width: 300
+  },
+  field: {
+    height: 30,
+    boxSizing: 'border-box',
+    paddingLeft: 10,
+    width: 300
+  }
+};
 
 export default WeatherForm;
