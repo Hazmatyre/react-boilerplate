@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 
 class WeatherForm extends Component {
 
   onCitySubmit = (e) => {
     e.preventDefault();
-    var city = this.props.city
+    var city = this.city.input.value;
+    console.log(city);
     if (city.length > 0)
       this.props.onCitySubmit();
   }
 
   onCityChange = (e) => {
     e.preventDefault();
-    let update = {city: this.refs.city.value};
+    let update = {city: this.city.input.value};
     this.props.onCityChange(update);
   }
 
@@ -20,12 +22,12 @@ class WeatherForm extends Component {
     return (
       <div>
         <form onSubmit={this.onCitySubmit}>
-          <input
+          <TextField
             type="text"
-            ref="city"
+            ref={(city) => {this.city = city}}
             style={styles.field}
             onChange={this.onCityChange}
-            placeholder="Enter city name"
+            floatingLabelText="Enter city name"
           />
           <br/>
           <RaisedButton
@@ -42,13 +44,9 @@ class WeatherForm extends Component {
 var styles = {
   button: {
     margin: 12,
-    height: 30,
     width: 300
   },
   field: {
-    height: 30,
-    boxSizing: 'border-box',
-    paddingLeft: 10,
     width: 300
   }
 };
