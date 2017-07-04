@@ -7,7 +7,7 @@ import RefreshIndicator from 'material-ui/RefreshIndicator';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
 
-
+import CityErr from './CityErr.js';
 
 class Weather extends Component {
   constructor(props) {
@@ -70,30 +70,14 @@ class Weather extends Component {
       </div>
     )
 
-    const actions = [
-      <RaisedButton
-        label="Ok!"
-        secondary={true}
-        keyboardFocused={false}
-        onTouchTap={this.handleErrClose}
-      />,
-    ];
-
     const renderMessage = () => {
       if (isLoading) {
         return <Loading/>;
       } else if (this.state.err) {
         return(
-          <Dialog
-            title="No city found"
-            actions={actions}
-            contentStyle={{maxWidth: 480}}
-            actionsContainerStyle={{paddingRight:20, paddingBottom:20}}
-            modal={false}
-            open={this.state.err}
-            onRequestClose={this.handleErrClose}>
-            Sorry, please try again.
-          </Dialog>
+          <CityErr
+            err={this.state.err}
+            onErrClose={this.handleErrClose}/>
         );
       } else if (cityOutput && temperature) {
         return(

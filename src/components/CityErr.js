@@ -2,20 +2,13 @@ import React, { Component } from 'react';
 import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton';
 
-
 class CityErr extends Component {
 
-  constructor() {
-    this.setState({open: false});
+  constructor(props) {
+    super(props)
+    this.err = this.props.err
+    this.handleErrClose = this.props.onErrClose;
   }
-
-  handleOpen = () => {
-    this.setState({open: true});
-  };
-
-  handleClose = () => {
-    this.setState({open: false});
-  };
 
   render() {
     const actions = [
@@ -23,22 +16,21 @@ class CityErr extends Component {
         label="Ok!"
         secondary={true}
         keyboardFocused={true}
-        onTouchTap={this.handleClose}
+        onTouchTap={this.handleErrClose}
       />,
     ];
 
     return (
-      <div>
-        <RaisedButton label="Dialog" onTouchTap={this.handleOpen} />
-        <Dialog
-          title="No city found with that name."
-          actions={actions}
-          modal={false}
-          open={this.state.open}
-          onRequestClose={this.handleClose}>
-          Please try again.
-        </Dialog>
-      </div>
+      <Dialog
+        title="No city found"
+        actions={actions}
+        contentStyle={{maxWidth: 480}}
+        actionsContainerStyle={{paddingRight:20, paddingBottom:20}}
+        modal={false}
+        open={this.err}
+        onRequestClose={this.handleErrClose}>
+        Sorry, please try again.
+      </Dialog>
     );
 
   }
