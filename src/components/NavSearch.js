@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import RaisedButton from 'material-ui/RaisedButton';
+import { withRouter } from 'react-router';
 
 class NavSearch extends Component {
 
   onSearch = (e) => {
     e.preventDefault();
-    alert("Wew");
+    let cityTemp = this.city.value;
+    if (cityTemp && cityTemp.length > 0)
+      this.props.history.push(`/?city=${cityTemp}`, {key: Math.random()});
   }
 
   render() {
@@ -14,6 +17,7 @@ class NavSearch extends Component {
       <div>
         <form onSubmit={this.onSearch}>
           <input
+            ref={(city) => {this.city = city}}
             type="search"
             style={styles.field}
             placeholder="City"/>
@@ -46,4 +50,4 @@ var styles = {
   }
 };
 
-export default NavSearch;
+export default withRouter(NavSearch);

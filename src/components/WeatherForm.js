@@ -1,21 +1,36 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router'
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
+import URLSearchParams from 'url-search-params'
+
+
 class WeatherForm extends Component {
+
+  constructor(props) {
+    super(props);
+
+    // this.defaultCity = this.props.city;
+  }
+
+  updateDefaultWeather() {
+    let params = new URLSearchParams(this.props.location.search);
+    let city = params.get('city');
+    if (city && city.length > 0) {
+      return this.defaultCity = city;
+    }
+    this.defaultCity = '';
+  }
 
   onCitySubmit = (e) => {
     e.preventDefault();
-    var city = this.city.input.value;
-    console.log(city);
-    if (city.length > 0)
-      this.props.onCitySubmit();
+    this.props.onCitySubmit();
   }
 
   onCityChange = (e) => {
     e.preventDefault();
-    let update = {city: this.city.input.value};
-    this.props.onCityChange(update);
+    this.props.onCityChange(this.city.input.value);
   }
 
   render() {
@@ -26,6 +41,8 @@ class WeatherForm extends Component {
           style={styles.container}>
           <TextField
             type="search"
+            defaultValue={this.props.initialCity === null ? '' : this.props.initialCity}
+            key={this.props.cityChanged}
             ref={(city) => {this.city = city}}
             style={styles.field}
             onChange={this.onCityChange}
@@ -57,4 +74,4 @@ var styles = {
   }
 };
 
-export default WeatherForm;
+export default withRouter(WeatherForm);

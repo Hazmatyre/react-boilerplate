@@ -2,51 +2,88 @@ import React, { Component } from 'react';
 import WeatherForm from './WeatherForm.js';
 import WeatherOutput from './WeatherOutput.js';
 import {getWeather} from '../api/openWeatherMap.js'
+import { withRouter } from 'react-router';
 
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
 
 import CityErr from './CityErr.js';
+import URLSearchParams from 'url-search-params'
 
 class Weather extends Component {
   constructor(props) {
     super(props);
     this.state = {
       city: undefined,
+      cityChanged: undefined,
       temperature: undefined,
       isLoading: false,
       err: false
     };
+
+    this.urlListener = this.props.history.listen((location, action) => {
+      if (location.pathname === '/') {
+        let params = new URLSearchParams(location.search);
+        let city = params.get('city');
+        this.handleQueryStringChange(city);
+      }
+    });
   }
 
-  handleCityChange = (update) => {
-    this.setState(update);
+  componentWillUnmount() {
+    this.urlListener();
+  }
+
+  componentWillMount = () => {
+    this.handleQueryStringChange();
+    // this.props.history.replace('/');
+  }
+
+  handleQueryStringChange = async (location) => {
+    if (location !== undefined) {
+      await this.handleCityChange(location);
+      this.handleCitySubmit();
+    }
+    var params = new URLSearchParams(this.props.location.search);
+    var city = params.get('city');
+    if (city && city.length > 0) {
+      await this.handleCityChange(city);
+      this.handleCitySubmit();
+    }
+  }
+
+  handleCityChange = (city) => {
+    this.setState({city: city});
   }
 
   handleCitySubmit = async () => {
-    this.setState({
-      isLoading: true,
-    });
-    try {
-      let response = await fetch(getWeather(this.state.city));
-      let responseJson = await response.json()
-      let status = response.status
-      if (status === 200)
-        this.setState({
-          temperature: responseJson.main.temp,
-          cityOutput: responseJson.name,
-          isLoading: false,
-        })
-      else if (status === 404)
-        this.setState({err: true})
-    } catch (err) {
-      console.log(err);
-      alert('ERROR: ' + err);
+    if (!this.state.isLoading) {
+      this.setState({
+        isLoading: true,
+        err: false,
+        cityChanged: this.state.city,
+      });
+      try {
+        let response = await fetch(getWeather(this.state.city));
+        let responseJson = await response.json()
+        let status = response.status
+        if (status === 200)
+          this.setState({
+            temperature: responseJson.main.temp,
+            cityOutput: responseJson.name,
+            isLoading: false,
+          })
+        else if (status === 404)
+          this.setState({err: true})
+      } catch (err) {
+        console.log(err);
+        alert('ERROR: ' + err);
+      }
+      this.setState({
+        isLoading: false,
+      });
     }
-    this.setState({
-      isLoading: false,
-    });
   }
 
   handleErrClose = () => {
@@ -57,7 +94,8 @@ class Weather extends Component {
     var {city,
       temperature,
       cityOutput,
-      isLoading } = this.state;
+      isLoading,
+      cityChanged } = this.state;
 
     const Loading = () => (
       <div>
@@ -97,7 +135,8 @@ class Weather extends Component {
         <WeatherForm
           onCityChange={this.handleCityChange}
           onCitySubmit={this.handleCitySubmit}
-          city={city}
+          initialCity={city}
+          cityChanged={cityChanged}
         />
         {renderMessage()}
       </div>
@@ -107,4 +146,4 @@ class Weather extends Component {
 
 }
 
-export default Weather;
+export default withRouter(Weather);
