@@ -65,6 +65,10 @@ class Weather extends Component {
         cityChanged: this.state.city,
       });
       try {
+        if (this.state.city.length > 60){
+          let someString = "The longest city in the world is 58 letters. Did you really think I didn't know? It's Llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch.";
+          throw someString; 
+        }
         let response = await fetch(getWeather(this.state.city));
         let responseJson = await response.json()
         let status = response.status
