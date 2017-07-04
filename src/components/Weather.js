@@ -4,6 +4,10 @@ import WeatherOutput from './WeatherOutput.js';
 import {getWeather} from '../api/openWeatherMap.js'
 
 import RefreshIndicator from 'material-ui/RefreshIndicator';
+import RaisedButton from 'material-ui/RaisedButton';
+import Dialog from 'material-ui/Dialog';
+
+
 
 class Weather extends Component {
   constructor(props) {
@@ -12,6 +16,7 @@ class Weather extends Component {
       city: undefined,
       temperature: undefined,
       isLoading: false,
+      err: false
     };
   }
 
@@ -34,7 +39,7 @@ class Weather extends Component {
           isLoading: false,
         })
       else if (status === 404)
-        throw "City not found!"
+        this.setState({err: true})
     } catch (err) {
       console.log(err);
       alert('ERROR: ' + err);
@@ -42,6 +47,10 @@ class Weather extends Component {
     this.setState({
       isLoading: false,
     });
+  }
+
+  handleErrClose = () => {
+    this.setState({err: false});
   }
 
   render() {
@@ -61,9 +70,31 @@ class Weather extends Component {
       </div>
     )
 
-    function renderMessage() {
+    const actions = [
+      <RaisedButton
+        label="Ok!"
+        secondary={true}
+        keyboardFocused={false}
+        onTouchTap={this.handleErrClose}
+      />,
+    ];
+
+    const renderMessage = () => {
       if (isLoading) {
         return <Loading/>;
+      } else if (this.state.err) {
+        return(
+          <Dialog
+            title="No city found"
+            actions={actions}
+            contentStyle={{maxWidth: 480}}
+            actionsContainerStyle={{paddingRight:20, paddingBottom:20}}
+            modal={false}
+            open={this.state.err}
+            onRequestClose={this.handleErrClose}>
+            Sorry, please try again.
+          </Dialog>
+        );
       } else if (cityOutput && temperature) {
         return(
           <WeatherOutput
@@ -84,7 +115,9 @@ class Weather extends Component {
         {renderMessage()}
       </div>
     );
+
   }
+
 }
 
 export default Weather;

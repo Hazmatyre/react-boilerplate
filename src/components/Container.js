@@ -5,6 +5,7 @@ var style = {
   container: {
     display: 'flex',
     justifyContent: 'space-around',
+    paddingTop: 50,
   },
   inner: {
     width: 480
