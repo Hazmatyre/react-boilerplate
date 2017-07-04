@@ -89,7 +89,10 @@ class Weather extends Component {
     }
 
     return (
-      <div style={{textAlign: 'center'}}>
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',}}>
         <h1>Get Weather</h1>
         <WeatherForm
           onCityChange={this.handleCityChange}

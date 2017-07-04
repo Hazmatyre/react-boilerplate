@@ -8,7 +8,10 @@ var style = {
     paddingTop: 50,
   },
   inner: {
-    width: 480
+    minWidth: 300,
+    maxWidth: 480,
+    paddingLeft: 10,
+    paddingRight: 10,
   }
 }
 

@@ -35,8 +35,8 @@ var styles = {
     height: 30,
   },
   field: {
-    mozAppearance: 'none',
-    webkitAppearance: 'none',
+    MozAppearance: 'none',
+    WebkitAppearance: 'none',
     appearance: 'none',
     borderStyle: 'solid',
     borderColor: '#E0E0E0',

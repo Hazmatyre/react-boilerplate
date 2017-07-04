@@ -21,7 +21,9 @@ class WeatherForm extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.onCitySubmit}>
+        <form
+          onSubmit={this.onCitySubmit}
+          style={styles.container}>
           <TextField
             type="search"
             ref={(city) => {this.city = city}}
@@ -42,12 +44,16 @@ class WeatherForm extends Component {
 }
 
 var styles = {
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around'
+  },
   button: {
-    margin: 12,
-    width: 300
+    flex: 1,
   },
   field: {
-    width: 300
+    flex: 1,
   }
 };
 
