@@ -23,7 +23,7 @@ class WeatherForm extends Component {
       <div>
         <form onSubmit={this.onCitySubmit}>
           <TextField
-            type="text"
+            type="search"
             ref={(city) => {this.city = city}}
             style={styles.field}
             onChange={this.onCityChange}

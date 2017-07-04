@@ -14,7 +14,7 @@ class NavSearch extends Component {
       <div>
         <form onSubmit={this.onSearch}>
           <input
-            type="text"
+            type="search"
             style={styles.field}
             placeholder="City"/>
           <RaisedButton
@@ -35,6 +35,11 @@ var styles = {
     height: 30,
   },
   field: {
+    mozAppearance: 'none',
+    webkitAppearance: 'none',
+    appearance: 'none',
+    borderStyle: 'solid',
+    borderColor: '#E0E0E0',
     height: 30,
     boxSizing: 'border-box',
     paddingLeft: 10,
